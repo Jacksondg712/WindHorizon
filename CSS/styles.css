@@ -272,7 +272,10 @@ button:focus{
     margin-left: auto;
     margin-right: auto;
     padding: auto;  
-    background-image: url("../images/ESTUDIO/Fondo__sol.jpg");
+    background-image: url("../images/ESTUDIO/FS1.png");
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-size: cover; /* Ajusta la imagen para cubrir todo el div */
+    background-position: center; /* Centra la imagen en el div */
     margin-top: 80px;
     
 
@@ -432,11 +435,13 @@ button:focus{
     padding: 12px 0 10px 10px;
     resize: none;
     margin-top: 4px;
+    transition: border-color 0.5s ease;
 
 }
 
-.modal__input_coment:focus, .modal__input_coment:hover{
-    border: 1px solid #21f391;
+.modal__input_coment:focus, 
+.modal__input_coment:hover{
+    border-color: #21f391;
 }
 
 
@@ -574,7 +579,7 @@ button:focus{
 .dedication__card__imagen{
     width: 370px;
     height: 294px;
-    background-image: url(../images/ESTUDIO/AppEscritorio.jpg);
+    background-image: url(../images/ESTUDIO/AppEscritorio.png);
     background-position: center;
     display: flex;
     align-items: flex-end;
@@ -583,7 +588,7 @@ button:focus{
 .dedication__card__imagen1{
     width: 370px;
     height: 294px;
-    background-image: url(../images/ESTUDIO/AppMovil.jpg);
+    background-image: url(../images/ESTUDIO/AppMovil.png);
     background-position: center;
     display: flex;
     align-items: flex-end;
@@ -592,7 +597,7 @@ button:focus{
 .dedication__card__imagen2{
     width: 370px;
     height: 294px;
-    background-image: url(../images/ESTUDIO/SolucionDise.jpg);
+    background-image: url(../images/ESTUDIO/SolucionDise.png);
     background-position: center;
     display: flex;
     align-items: flex-end;
@@ -601,7 +606,7 @@ button:focus{
 .dedication__card__imagen3{
     width: 370px;
     height: 294px;
-    background-image: url(../images/ESTUDIO/Migracion.jpg);
+    background-image: url(../images/ESTUDIO/Migracion.png);
     background-position: center;
     display: flex;
     align-items: flex-end;
@@ -610,7 +615,7 @@ button:focus{
 .dedication__card__imagen4{
     width: 370px;
     height: 294px;
-    background-image: url(../images/ESTUDIO/AnalisisDatos.jpg);
+    background-image: url(../images/ESTUDIO/AnalisisDatos.png);
     background-position: center;
     display: flex;
     align-items: flex-end;
@@ -619,7 +624,7 @@ button:focus{
 .dedication__card__imagen5{
     width: 370px;
     height: 294px;
-    background-image: url(../images/ESTUDIO/IA.jpg);
+    background-image: url(../images/ESTUDIO/IA.png);
     background-position: center;
     display: flex;
     align-items: flex-end;
@@ -990,8 +995,8 @@ margin-bottom: 20px;
     flex-basis: calc((100% - 60px)/3);
     margin-left: auto;
     margin-right: auto;
-    width: 370px;
-    height: 404px;
+    width: 1200px;
+    height: 400px;
     background: #99A3A4;
     border-radius: 10px;
     box-sizing: border-box;
@@ -1003,10 +1008,10 @@ margin-bottom: 20px;
 .port__card{
     position: absolute;
     top: 0;
-    height: 294px;
-    width: 370px;
+    height: 300px;
+    width: 400px;
     background: #21f391;
-    padding: 63px 24px;
+    padding: 50px 24px;
     letter-spacing: 0.03em;
     color: #FFFFFF;
     transform: translateY(190%);
@@ -1029,6 +1034,7 @@ margin-bottom: 20px;
 .port__card__image{
     position: relative;
    overflow: hidden; 
+   height: 300px;
 }
 
 /* **************************************************************************  */
@@ -1078,6 +1084,7 @@ margin-bottom: 20px;
 .carrusel {
     position: relative;
     margin-top: 80px;
+    width: 100%;
   }
   
   .slider {
@@ -1086,15 +1093,21 @@ margin-bottom: 20px;
     width: 100%;
     
   }
+
+  .image{
+    width: 100%;
+  }
   
   .slide {
+    width: 100%;
     flex: 0 0 100%;
+    justify-content: center;
     transition: transform 0.5s ease;
   }
   
   img {
-    max-width: 100%;
-    height: auto;
+    max-width: 1;
+    height: 700px;
   }
   
   .caption {
