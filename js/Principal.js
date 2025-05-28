@@ -1,228 +1,242 @@
 
-  anime({
-  targets: '#wind',
-  strokeDashoffset: [anime.setDashoffset, 0],  // Dibujado progresivo
-  duration: 1500,
-  easing: 'easeOutSine',
-  loop: true,
-  direction: 'alternate'         // Ida y vuelta
-});
+function createWindParticles() {
+            const container = document.getElementById('windParticles');
+            
+            setInterval(() => {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.left = '-100px';
+                particle.style.animationDelay = Math.random() * 2 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                
+                container.appendChild(particle);
+                
+                // Remover partícula después de la animación
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                }, 10000);
+            }, 300);
+        }
 
-function wrapLetters() {
-            const title = document.getElementById('animatedTitle');
-            const text = title.textContent;
-            let newHTML = '';
+        // Efectos de hover para las turbinas
+        document.querySelectorAll('.turbine-image').forEach((turbine, index) => {
+            turbine.addEventListener('mouseenter', () => {
+                turbine.style.transform += ' scale(1.1)';
+                turbine.style.borderColor = ['#01b863', '#0add7c', '#21f391'][index];
+                turbine.style.boxShadow = '0 25px 70px rgba(33, 243, 145, 0.6)';
+            });
             
-            for (let i = 0; i < text.length; i++) {
-                if (text[i] === ' ') {
-                    newHTML += '<span>&nbsp;</span>';
-                } else {
-                    newHTML += '<span>' + text[i] + '</span>';
+            turbine.addEventListener('mouseleave', () => {
+                turbine.style.transform = turbine.style.transform.replace(' scale(1.1)', '');
+                turbine.style.borderColor = 'rgba(33, 243, 145, 0.4)';
+                turbine.style.boxShadow = '0 10px 30px rgba(10, 113, 66, 0.3)';
+            });
+        });
+
+        // Inicializar efectos
+        document.addEventListener('DOMContentLoaded', () => {
+            createWindParticles();
+        });
+
+        // Efecto parallax suave
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.energy-pulse');
+            
+            parallaxElements.forEach((element, index) => {
+                const speed = 0.5 + (index * 0.1);
+                element.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+ const hotspots = document.querySelectorAll('.hotspot');
+        const specContents = document.querySelectorAll('.spec-content');
+        const defaultMessage = document.getElementById('defaultMessage');
+        const tooltip = document.getElementById('tooltip');
+        
+        const tooltipTexts = {
+            'darrieus': 'Rotor Darrieus - Haz clic para especificaciones',
+            'generator': 'Generador - Haz clic para especificaciones',
+            'savonius': 'Rotor Savonius - Haz clic para especificaciones',
+            'tower': 'Torre - Haz clic para especificaciones',
+            'base': 'Base - Haz clic para especificaciones'
+        };
+        
+        let currentActive = null;
+        
+        hotspots.forEach(hotspot => {
+            // Eventos de hover para tooltip
+            hotspot.addEventListener('mouseenter', (e) => {
+                const spec = e.target.dataset.spec;
+                tooltip.textContent = tooltipTexts[spec];
+                tooltip.style.left = e.target.offsetLeft + 10 + 'px';
+                tooltip.style.top = e.target.offsetTop - 10 + 'px';
+                tooltip.classList.add('show');
+            });
+            
+            hotspot.addEventListener('mouseleave', () => {
+                tooltip.classList.remove('show');
+            });
+            
+            // Evento de click
+            hotspot.addEventListener('click', (e) => {
+                e.preventDefault();
+                const specType = e.target.dataset.spec;
+                
+                // Remover estado activo de todos los hotspots
+                hotspots.forEach(h => h.classList.remove('active'));
+                
+                // Ocultar todos los contenidos de especificaciones
+                specContents.forEach(content => content.classList.remove('active'));
+                
+                // Ocultar mensaje por defecto
+                defaultMessage.classList.add('hidden');
+                
+                // Activar el hotspot clickeado
+                e.target.classList.add('active');
+                
+                // Mostrar el contenido correspondiente
+                const targetContent = document.getElementById(`spec-${specType}`);
+                if (targetContent) {
+                    setTimeout(() => {
+                        targetContent.classList.add('active');
+                    }, 200);
                 }
-            }
-            
-            title.innerHTML = newHTML;
+                
+                currentActive = specType;
+                
+                // Animación de click
+                e.target.style.transform = 'scale(1.3)';
+                setTimeout(() => {
+                    e.target.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+        
+        // Función para resetear a estado inicial
+        function resetToDefault() {
+            hotspots.forEach(h => h.classList.remove('active'));
+            specContents.forEach(content => content.classList.remove('active'));
+            defaultMessage.classList.remove('hidden');
+            currentActive = null;
         }
         
-        // Ejecutar cuando se carga la página
-        window.onload = wrapLetters;
+        // Opcional: Click fuera para resetear
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.hotspot') && !e.target.closest('.specifications-panel')) {
+                resetToDefault();
+            }
+        });
+        
+        // Animación inicial de los hotspots
+        setTimeout(() => {
+            hotspots.forEach((hotspot, index) => {
+                setTimeout(() => {
+                    hotspot.style.opacity = '1';
+                    hotspot.style.transform = 'scale(1)';
+                }, index * 200);
+            });
+        }, 1000);
 
- const windSVG = `<svg viewBox="0 -1 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>wind</title> <desc>Created with Sketch Beta.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage"> <g id="Icon-Set-Filled" sketch:type="MSLayerGroup" transform="translate(-468.000000, -832.000000)" fill="#000000"> <path d="M490,846 L469,846 C468.447,846 468,846.447 468,847 C468,847.553 468.447,848 469,848 L488.833,848 C491.687,848 494,849.791 494,852 C494,854.209 492.291,856 488,856 L488,858 L490,858 C493.313,858 496,855.313 496,852 C496,848.687 493.313,846 490,846 L490,846 Z M482.002,850 L474,850 C473.447,850 473,850.448 473,851 C473,851.553 473.447,852 474,852 L482,852 C483.104,852 484,852.896 484,854 C484,855.104 483.104,856 482,856 L482,858 C484.209,858 486,856.209 486,854 C486,851.792 484.21,850.002 482.002,850 L482.002,850 Z M477,840 L489,840 C489.553,840 490,839.553 490,839 C490,838.448 489.553,838 489,838 L477,838 C476.447,838 476,838.448 476,839 C476,839.553 476.447,840 477,840 L477,840 Z M472,844 L490,844 C493.313,844 496,841.313 496,838 C496,834.687 493.313,832 490,832 L490,834 C492.822,834.531 494,835.791 494,838 C494,840.209 491.687,842 488.833,842 L472,842 C471.447,842 471,842.448 471,843 C471,843.553 471.447,844 472,844 L472,844 Z" id="wind" sketch:type="MSShapeGroup"> </path> </g> </g> </g></svg>`;
 
-    // Colores para los iconos de viento
-    const windColors = ['#3498db', '#2980b9', '#1abc9c', '#16a085', '#2c3e50'];
-    
-    // Tamaños para los iconos
-    const windSizes = ['small', 'medium', 'large'];
-    
-    // Función para generar un número aleatorio entre min y max
-    function getRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-    // Función para crear iconos de viento
-    function createWindIcons() {
-        // Crear iconos para cada fila
-        for (let i = 1; i <= 5; i++) {
-            const windRow = document.querySelector(`.wind-row-${i}`);
-            const iconsCount = getRandomInt(3, 6); // Número aleatorio de iconos por fila
+function createWindParticles() {
+            const container = document.getElementById('windParticles');
+            const particleCount = 50;
             
-            for (let j = 0; j < iconsCount; j++) {
-                // Crear un elemento div para contener el SVG
-                const windIcon = document.createElement('div');
-                windIcon.className = `wind-icon ${windSizes[getRandomInt(0, 2)]}`;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
                 
-                // Insertar el SVG y aplicar estilos
-                windIcon.innerHTML = windSVG;
-                  
-                  // Establecer color aleatorio para el SVG
-                  const color = windColors[getRandomInt(0, windColors.length - 1)];
-                  const svgPath = windIcon.querySelector('path');
-                  if (svgPath) {
-                      svgPath.setAttribute('fill', color);
-                  }
-                  
-                  // Aplicar retraso aleatorio a cada icono para que no aparezcan todos a la vez
-                  const delay = getRandomInt(0, 8);
-                  windIcon.style.animationDelay = `${delay}s`;
-                  
-                  // Añadir a la fila
-                  windRow.appendChild(windIcon);
-              }
-          }
-      }
+                // Posición aleatoria
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.left = '-50px';
+                
+                // Retraso aleatorio
+                particle.style.animationDelay = Math.random() * 3 + 's';
+                
+                // Duración aleatoria
+                particle.style.animationDuration = (2 + Math.random() * 2) + 's';
+                
+                container.appendChild(particle);
+            }
+        }
 
+        // Crear más partículas periódicamente
+        function continuousWindEffect() {
+            setInterval(() => {
+                const container = document.getElementById('windParticles');
+                if (container.children.length < 50) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.top = Math.random() * 100 + '%';
+                    particle.style.left = '-50px';
+                    particle.style.animationDelay = '0s';
+                    particle.style.animationDuration = (2 + Math.random() * 2) + 's';
+                    
+                    container.appendChild(particle);
+                    
+                    // Remover partícula después de la animación
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.parentNode.removeChild(particle);
+                        }
+                    }, 4000);
+                }
+            }, 200);
+        }
 
-      // Iniciar la animación cuando la página se carga
-      window.onload = createWindIcons;
+        // Efecto de hover en las tarjetas de beneficios
+        function addHoverEffects() {
+            const benefitCards = document.querySelectorAll('.benefit-card');
+            
+            benefitCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        }
 
-const btnAbrirModal = document.getElementById('abrirModal');
-const btnAbrirModal1 = document.getElementById('abrirModal1');
-const btnAbrirModal2 = document.getElementById('abrirModal2');
-const btnAbrirModal3 = document.getElementById('abrirModal3');
+        // Animación de entrada secuencial
+        function animateOnScroll() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
 
+            const animatedElements = document.querySelectorAll('.explanation-card, .benefit-card');
+            animatedElements.forEach(el => observer.observe(el));
+        }
 
-    const modalOverlay = document.getElementById('modalOverlay');
-    const modalOverlay1 = document.getElementById('modalOverlay1');
-    const modalOverlay2 = document.getElementById('modalOverlay2');
-    const modalOverlay3 = document.getElementById('modalOverlay3');
+        // Inicializar efectos
+        document.addEventListener('DOMContentLoaded', function() {
+            createWindParticles();
+            continuousWindEffect();
+            addHoverEffects();
+            animateOnScroll();
+        });
 
-    const btnCerrarModal = document.getElementById('cerrarModal');
-    const btnCerrarModal1 = document.getElementById('cerrarModal1');
-    const btnCerrarModal2 = document.getElementById('cerrarModal2');
-    const btnCerrarModal3 = document.getElementById('cerrarModal3');
-
-    const btnCerrarX = document.getElementById('cerrarX');
-    const btnCerrarX1 = document.getElementById('cerrarX1');
-    const btnCerrarX2 = document.getElementById('cerrarX2');
-    const btnCerrarX3 = document.getElementById('cerrarX3');
-
-    
-    // Función para abrir el modal
-    function abrirModal() {
-      modalOverlay.style.display = 'flex';
-      document.body.style.overflow = 'hidden'; // Evita scroll en el fondo
-    }
-    
-    // Función para cerrar el modal
-    function cerrarModal() {
-      modalOverlay.style.display = 'none';
-      document.body.style.overflow = 'auto'; // Restaura scroll en el fondo
-    }
-    
-    // Eventos para abrir y cerrar el modal
-    btnAbrirModal.addEventListener('click', abrirModal);
-    btnCerrarModal.addEventListener('click', cerrarModal);
-    btnCerrarX.addEventListener('click', cerrarModal);
-    
-    // Cerrar modal al hacer clic fuera del contenido
-    modalOverlay.addEventListener('click', function(e) {
-      if (e.target === modalOverlay) {
-        cerrarModal();
-      }
-    });
-    
-    // Cerrar modal con la tecla ESC
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && modalOverlay.style.display === 'flex') {
-        cerrarModal();
-      }
-    });
-
-
-
-     // Función para abrir el modal
-    function abrirModal1() {
-      modalOverlay1.style.display = 'flex';
-      document.body.style.overflow = 'hidden'; // Evita scroll en el fondo
-    }
-    
-    // Función para cerrar el modal
-    function cerrarModal1() {
-      modalOverlay1.style.display = 'none';
-      document.body.style.overflow = 'auto'; // Restaura scroll en el fondo
-    }
-    
-    // Eventos para abrir y cerrar el modal
-    btnAbrirModal1.addEventListener('click', abrirModal1);
-    btnCerrarModal1.addEventListener('click', cerrarModal1);
-    btnCerrarX1.addEventListener('click', cerrarModal1);
-    
-    // Cerrar modal al hacer clic fuera del contenido
-    modalOverlay1.addEventListener('click', function(e) {
-      if (e.target === modalOverlay1) {
-        cerrarModal1();
-      }
-    });
-    
-    // Cerrar modal con la tecla ESC
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && modalOverlay1.style.display === 'flex') {
-        cerrarModal1();
-      }
-    });
-
-
-
-     // Función para abrir el modal
-    function abrirModal2() {
-      modalOverlay2.style.display = 'flex';
-      document.body.style.overflow = 'hidden'; // Evita scroll en el fondo
-    }
-    
-    // Función para cerrar el modal
-    function cerrarModal2() {
-      modalOverlay2.style.display = 'none';
-      document.body.style.overflow = 'auto'; // Restaura scroll en el fondo
-    }
-    
-    // Eventos para abrir y cerrar el modal
-    btnAbrirModal2.addEventListener('click', abrirModal2);
-    btnCerrarModal2.addEventListener('click', cerrarModal2);
-    btnCerrarX2.addEventListener('click', cerrarModal2);
-    
-    // Cerrar modal al hacer clic fuera del contenido
-    modalOverlay2.addEventListener('click', function(e) {
-      if (e.target === modalOverlay2) {
-        cerrarModal2();
-      }
-    });
-    
-    // Cerrar modal con la tecla ESC
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && modalOverlay2.style.display === 'flex') {
-        cerrarModal2();
-      }
-    });
-
-
-     // Función para abrir el modal
-    function abrirModal3() {
-      modalOverlay3.style.display = 'flex';
-      document.body.style.overflow = 'hidden'; // Evita scroll en el fondo
-    }
-    
-    // Función para cerrar el modal
-    function cerrarModal3() {
-      modalOverlay3.style.display = 'none';
-      document.body.style.overflow = 'auto'; // Restaura scroll en el fondo
-    }
-    
-    // Eventos para abrir y cerrar el modal
-    btnAbrirModal3.addEventListener('click', abrirModal3);
-    btnCerrarModal3.addEventListener('click', cerrarModal3);
-    btnCerrarX3.addEventListener('click', cerrarModal3);
-    
-    // Cerrar modal al hacer clic fuera del contenido
-    modalOverlay3.addEventListener('click', function(e) {
-      if (e.target === modalOverlay3) {
-        cerrarModal3();
-      }
-    });
-    
-    // Cerrar modal con la tecla ESC
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && modalOverlay3.style.display === 'flex') {
-        cerrarModal3();
-      }
-    });
-
+        // Efecto parallax sutil en el movimiento del mouse
+        document.addEventListener('mousemove', function(e) {
+            const particles = document.querySelectorAll('.particle');
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            particles.forEach((particle, index) => {
+                const speed = (index % 3 + 1) * 0.5;
+                const x = (mouseX - 0.5) * speed;
+                const y = (mouseY - 0.5) * speed;
+                
+                particle.style.transform += ` translate(${x}px, ${y}px)`;
+            });
+        });
