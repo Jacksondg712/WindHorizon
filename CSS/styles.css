@@ -1320,7 +1320,7 @@ button{
 }
 
 .internaImg{
-    background-image: url('../images/ESTUDIO/interna.png');
+    background-image: url('images/ESTUDIO/interna.png');
     background-size: cover;
 	background-position: center;
     background-repeat: no-repeat;
