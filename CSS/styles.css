@@ -306,7 +306,7 @@ button{
             border-radius: 20px;
             padding: 2rem;
             animation: logoFloat 6s ease-in-out infinite;
-            background-image: url('/images/ESTUDIO/Logo.png');
+            background-image: url('../images/ESTUDIO/Logo.png');
             background-size: cover;
 	        background-position: center;
             background-repeat: no-repeat;
@@ -331,8 +331,8 @@ button{
             box-shadow: 0 20px 40px rgba(1, 184, 99, 0.4);
         }
 
-        .exploImg{
-            background-image: url('..//images/ESTUDIO/expo2.png');
+        .ExploImg{
+            background-image: url('../images/ESTUDIO/expo2.png');
             background-size: cover;
 	        background-position: center;
             background-repeat: no-repeat;
@@ -1319,7 +1319,7 @@ button{
 
 }
 
-.internaImg{
+.InternaImg{
     background-image: url('../images/ESTUDIO/interna.png');
     background-size: cover;
 	background-position: center;
