@@ -950,7 +950,7 @@ button{
         .TurbinaImag{
             width: 350px;
             height: 550px;
-            background-image: url('/images/ESTUDIO/explo.png');
+            background-image: url('../images/ESTUDIO/explo.png');
             background-size: cover;
 	        background-position: center;
             background-repeat: no-repeat;
