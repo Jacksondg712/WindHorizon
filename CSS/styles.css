@@ -332,14 +332,14 @@ button{
         }
 
         .exploImg{
-            background-image: url('/images/ESTUDIO/expo2.png');
+            background-image: url('..//images/ESTUDIO/expo2.png');
             background-size: cover;
 	        background-position: center;
             background-repeat: no-repeat;
         }
 
         .DarrieusImg{
-            background-image: url('images/ESTUDIO/aspas.png');
+            background-image: url('../images/ESTUDIO/aspas.png');
             background-size: cover;
 	        background-position: center;
             background-repeat: no-repeat;
