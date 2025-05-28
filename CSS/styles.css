@@ -338,8 +338,8 @@ button{
             background-repeat: no-repeat;
         }
 
-        .darrieusImg{
-            background-image: url('/images/ESTUDIO/aspas.png');
+        .DarrieusImg{
+            background-image: url('images/ESTUDIO/aspas.png');
             background-size: cover;
 	        background-position: center;
             background-repeat: no-repeat;
@@ -1247,10 +1247,10 @@ button{
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     float: right;
     margin-left: 1rem;
-    background-image: url('../images/ESTUDIO/aspas.png');
+    /* background-image: url('images/ESTUDIO/aspas.png');
     background-size: cover;
 	background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
 
 }
 
@@ -1320,7 +1320,7 @@ button{
 }
 
 .internaImg{
-    background-image: url('images/ESTUDIO/interna.png');
+    background-image: url('../images/ESTUDIO/interna.png');
     background-size: cover;
 	background-position: center;
     background-repeat: no-repeat;
